@@ -1,8 +1,8 @@
 package com.game.controller;
 
-import com.game.entity.Profession;
-import com.game.entity.Race;
 import com.game.controller.utils.TestsHelper;
+import com.game.enums.ProfessionEnum;
+import com.game.enums.RaceEnum;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -78,8 +78,8 @@ public class GetCountTest extends AbstractTest {
         String contentAsString = result.getResponse().getContentAsString();
         int actual = Integer.parseInt(contentAsString);
         int expected = testsHelper.getPlayerInfosByBaned(true,
-                testsHelper.getPlayerInfosByRace(Race.DWARF,
-                        testsHelper.getPlayerInfosByProfession(Profession.CLERIC,
+                testsHelper.getPlayerInfosByRace(RaceEnum.DWARF,
+                        testsHelper.getPlayerInfosByProfession(ProfessionEnum.CLERIC,
                                 testsHelper.getAllPlayers()))).size();
 
         assertSame("Возвращается не правильный результат при запросе GET rest/players/count с параметрами race, profession и banned.", expected, actual);
@@ -96,8 +96,8 @@ public class GetCountTest extends AbstractTest {
         String contentAsString = result.getResponse().getContentAsString();
         int actual = Integer.parseInt(contentAsString);
         int expected = testsHelper.getPlayerInfosByMaxExperience(120000,
-                testsHelper.getPlayerInfosByRace(Race.TROLL,
-                        testsHelper.getPlayerInfosByProfession(Profession.WARRIOR,
+                testsHelper.getPlayerInfosByRace(RaceEnum.TROLL,
+                        testsHelper.getPlayerInfosByProfession(ProfessionEnum.WARRIOR,
                                 testsHelper.getAllPlayers()))).size();
 
         assertSame("Возвращается не правильный результат при запросе GET /rest/players/count с параметрами race, profession и maxExperience.", expected, actual);
@@ -130,8 +130,8 @@ public class GetCountTest extends AbstractTest {
         String contentAsString = result.getResponse().getContentAsString();
         int actual = Integer.parseInt(contentAsString);
         int expected = testsHelper.getPlayerInfosByBefore(1199138400000L,
-                testsHelper.getPlayerInfosByRace(Race.GIANT,
-                        testsHelper.getPlayerInfosByProfession(Profession.WARRIOR,
+                testsHelper.getPlayerInfosByRace(RaceEnum.GIANT,
+                        testsHelper.getPlayerInfosByProfession(ProfessionEnum.WARRIOR,
                         testsHelper.getAllPlayers()))).size();
 
         assertSame("Возвращается не правильный результат при запросе GET /rest/players/count с параметрами race, profession и before.", expected, actual);

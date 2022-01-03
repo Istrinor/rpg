@@ -1,7 +1,7 @@
 package com.game.controller.utils;
 
-import com.game.entity.Profession;
-import com.game.entity.Race;
+import com.game.enums.ProfessionEnum;
+import com.game.enums.RaceEnum;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -12,8 +12,8 @@ public class PlayerInfoTest {
     public Long id;
     public String name;
     public String title;
-    public Race race;
-    public Profession profession;
+    public RaceEnum race;
+    public ProfessionEnum profession;
     public Long birthday;
     public Boolean banned;
     public Integer experience;
@@ -23,7 +23,7 @@ public class PlayerInfoTest {
     public PlayerInfoTest() {
     }
 
-    public PlayerInfoTest(Long id, String name, String title, Race race, Profession profession, Long birthday,
+    public PlayerInfoTest(Long id, String name, String title, RaceEnum race, ProfessionEnum profession, Long birthday,
                           Boolean banned, Integer experience, Integer level, Integer untilNextLevel) {
         this.id = id;
         this.name = name;

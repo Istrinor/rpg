@@ -2,12 +2,11 @@ package com.game.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.game.entity.Profession;
-import com.game.entity.Race;
 import com.game.controller.utils.PlayerInfoTest;
 import com.game.controller.utils.TestsHelper;
+import com.game.enums.ProfessionEnum;
+import com.game.enums.RaceEnum;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -85,8 +84,8 @@ public class GetAllTest extends AbstractTest {
         List<PlayerInfoTest> actual = mapper.readValue(contentAsString, typeReference);
 
         List<PlayerInfoTest> expected = testsHelper.getPlayerInfosByPage(0, 3,
-                testsHelper.getPlayerInfosByRace(Race.HUMAN,
-                        testsHelper.getPlayerInfosByProfession(Profession.WARRIOR,
+                testsHelper.getPlayerInfosByRace(RaceEnum.HUMAN,
+                        testsHelper.getPlayerInfosByProfession(ProfessionEnum.WARRIOR,
                                 testsHelper.getPlayerInfosByAfter(1041372000000L,
                                         testsHelper.getPlayerInfosByBefore(1136066400000L,
                                                 testsHelper.getAllPlayers())))));
@@ -105,8 +104,8 @@ public class GetAllTest extends AbstractTest {
 
         List<PlayerInfoTest> actual = mapper.readValue(contentAsString, typeReference);
         List<PlayerInfoTest> expected = testsHelper.getPlayerInfosByPage(0, 3,
-                testsHelper.getPlayerInfosByRace(Race.ELF,
-                        testsHelper.getPlayerInfosByProfession(Profession.SORCERER,
+                testsHelper.getPlayerInfosByRace(RaceEnum.ELF,
+                        testsHelper.getPlayerInfosByProfession(ProfessionEnum.SORCERER,
                                 testsHelper.getPlayerInfosByMinExperience(50000,
                                         testsHelper.getPlayerInfosByMaxExperience(150000,
                                                 testsHelper.getAllPlayers())))));

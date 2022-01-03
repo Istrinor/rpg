@@ -1,6 +1,6 @@
-package com.game.entity;
+package com.game.enums;
 
-public enum Profession {
+public enum ProfessionEnum {
     WARRIOR,
     ROGUE,
     SORCERER,
