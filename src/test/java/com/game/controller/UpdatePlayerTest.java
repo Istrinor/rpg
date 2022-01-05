@@ -3,8 +3,8 @@ package com.game.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.controller.utils.PlayerInfoTest;
 import com.game.controller.utils.TestsHelper;
-import com.game.enums.ProfessionEnum;
-import com.game.enums.RaceEnum;
+import com.game.entity.Profession;
+import com.game.entity.Race;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -164,8 +164,8 @@ public class UpdatePlayerTest extends AbstractTest {
         PlayerInfoTest playerInfoTest = testsHelper.getPlayerInfosById(32);
 
         String newTitle = "TestName";
-        RaceEnum newRace = RaceEnum.DWARF;
-        ProfessionEnum newProfession = ProfessionEnum.ROGUE;
+        Race newRace = Race.DWARF;
+        Profession newProfession = Profession.ROGUE;
         long newBirthday = 1178571600000L;
 
         PlayerInfoTest expected = new PlayerInfoTest(playerInfoTest.id, playerInfoTest.name, newTitle, newRace, newProfession, newBirthday,

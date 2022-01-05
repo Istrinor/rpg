@@ -1,8 +1,5 @@
 package com.game.entity;
 
-import com.game.enums.ProfessionEnum;
-import com.game.enums.RaceEnum;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -21,10 +18,10 @@ public class PlayerEntity {
     private String title;
     @Enumerated(EnumType.STRING)
     @Column(name = "race")
-    private RaceEnum race;
+    private Race race;
     @Enumerated(EnumType.STRING)
     @Column(name = "profession")
-    private ProfessionEnum profession;
+    private Profession profession;
     @Column(name = "experience")
     private Integer experience;
     @Column(name = "birthday")
@@ -77,19 +74,19 @@ public class PlayerEntity {
         this.title = title;
     }
 
-    public RaceEnum getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(RaceEnum race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
-    public ProfessionEnum getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(ProfessionEnum profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 

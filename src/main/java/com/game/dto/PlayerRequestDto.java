@@ -1,8 +1,8 @@
 package com.game.dto;
 
-import com.game.enums.PlayerOrderEnum;
-import com.game.enums.ProfessionEnum;
-import com.game.enums.RaceEnum;
+import com.game.controller.PlayerOrder;
+import com.game.entity.Profession;
+import com.game.entity.Race;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public class PlayerRequestDto {
 
     private String name;
     private String title;
-    private RaceEnum race;
-    private ProfessionEnum profession;
+    private Race race;
+    private Profession profession;
     private Long after;
     private Long before;
     private Boolean banned;
@@ -27,7 +27,7 @@ public class PlayerRequestDto {
     private Integer maxLevel;
 
     // Pageable parameters
-    private PlayerOrderEnum order;
+    private PlayerOrder order;
     private Integer pageNumber;
     private Integer pageSize;
 
@@ -53,7 +53,7 @@ public class PlayerRequestDto {
         this.title = title;
     }
 
-    public RaceEnum getRace() {
+    public Race getRace() {
         return race;
     }
 
@@ -64,11 +64,11 @@ public class PlayerRequestDto {
         return race.name();
     }
 
-    public void setRace(RaceEnum race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
-    public ProfessionEnum getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
@@ -79,7 +79,7 @@ public class PlayerRequestDto {
         return profession.name();
     }
 
-    public void setProfession(ProfessionEnum profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 
@@ -139,11 +139,11 @@ public class PlayerRequestDto {
         this.maxLevel = maxLevel;
     }
 
-    public PlayerOrderEnum getOrder() {
+    public PlayerOrder getOrder() {
         return order;
     }
 
-    public void setOrder(PlayerOrderEnum order) {
+    public void setOrder(PlayerOrder order) {
         this.order = order;
     }
 

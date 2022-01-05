@@ -1,11 +1,11 @@
-package com.game.enums;
+package com.game.entity;
 
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum ProfessionEnum {
+public enum Profession {
     WARRIOR("WARRIOR"),
     ROGUE("ROGUE"),
     SORCERER("SORCERER"),
@@ -15,16 +15,16 @@ public enum ProfessionEnum {
     WARLOCK("WARLOCK"),
     DRUID("DRUID");
 
-    private static final Map<String, ProfessionEnum> NAME_MAP = Stream.of(values())
-            .collect(Collectors.toMap(ProfessionEnum::getName, Function.identity()));
+    private static final Map<String, Profession> NAME_MAP = Stream.of(values())
+            .collect(Collectors.toMap(Profession::getName, Function.identity()));
 
     private final String name;
 
-    ProfessionEnum(String name) {
+    Profession(String name) {
         this.name = name;
     }
 
-    public static ProfessionEnum getByName(String name) {
+    public static Profession getByName(String name) {
         return NAME_MAP.get(name);
     }
 

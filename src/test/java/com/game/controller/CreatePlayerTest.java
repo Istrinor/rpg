@@ -3,8 +3,8 @@ package com.game.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.controller.utils.PlayerInfoTest;
 import com.game.controller.utils.TestsHelper;
-import com.game.enums.ProfessionEnum;
-import com.game.enums.RaceEnum;
+import com.game.entity.Profession;
+import com.game.entity.Race;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -68,7 +68,7 @@ public class CreatePlayerTest extends AbstractTest {
                 .content(TestsHelper.BANNED_TRUE_JSON))
                 .andExpect(status().isOk());
 
-        PlayerInfoTest expected = new PlayerInfoTest(41L, "Амарылис", "Прозелит", RaceEnum.DWARF, ProfessionEnum.CLERIC, 988059600000L, true, 63986, 35, 2614);
+        PlayerInfoTest expected = new PlayerInfoTest(41L, "Амарылис", "Прозелит", Race.DWARF, Profession.CLERIC, 988059600000L, true, 63986, 35, 2614);
         String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
         PlayerInfoTest actual = new ObjectMapper().readValue(contentAsString, PlayerInfoTest.class);
         assertEquals("Возвращается не правильный результат при запросе создания игрока.", expected, actual);

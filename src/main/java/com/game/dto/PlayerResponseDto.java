@@ -1,7 +1,7 @@
 package com.game.dto;
 
-import com.game.enums.ProfessionEnum;
-import com.game.enums.RaceEnum;
+import com.game.entity.Profession;
+import com.game.entity.Race;
 
 import java.util.Objects;
 
@@ -10,8 +10,8 @@ public class PlayerResponseDto {
     private Long id;
     private String name;
     private String title;
-    private RaceEnum race;
-    private ProfessionEnum profession;
+    private Race race;
+    private Profession profession;
     private Long birthday;
     private Boolean banned;
     private Integer experience;
@@ -42,19 +42,19 @@ public class PlayerResponseDto {
         this.title = title;
     }
 
-    public RaceEnum getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(RaceEnum race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
-    public ProfessionEnum getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(ProfessionEnum profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 

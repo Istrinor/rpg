@@ -1,6 +1,6 @@
-package com.game.enums;
+package com.game.entity;
 
-public enum RaceEnum {
+public enum Race {
     HUMAN,
     DWARF,
     ELF,
