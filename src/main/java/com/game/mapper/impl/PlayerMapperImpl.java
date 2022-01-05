@@ -11,10 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -49,22 +47,7 @@ public class PlayerMapperImpl implements PlayerMapper {
         response.setTitle(playerEntity.getTitle());
         response.setRace(playerEntity.getRace());
         response.setProfession(playerEntity.getProfession());
-
-        Long birthday;
-        if (playerEntity.getBirthday() == null) {
-            birthday = null;
-        } else {
-            ZonedDateTime zonedDateTime = playerEntity.getBirthday().atStartOfDay(ZoneId.systemDefault());
-            // TODO workaround
-            // У вас неправильные тестовые данные или задание, приходят
-            // даты Long c учетом часов, а в базе хранится DATE
-            if (Objects.equals(playerEntity.getBirthday(), LocalDate.of(2001, 4, 24)) ||
-                    Objects.equals(playerEntity.getBirthday(), LocalDate.of(2007, 5, 8))) {
-                zonedDateTime = zonedDateTime.plusHours(1L);
-            }
-            birthday = zonedDateTime.toInstant().toEpochMilli();
-        }
-        response.setBirthday(birthday);
+        response.setBirthday(playerEntity.getBirthday() == null ? null:playerEntity.getBirthday().getTime());
         response.setBanned(playerEntity.getBanned());
         response.setExperience(playerEntity.getExperience());
         response.setLevel(playerEntity.getLevel());
@@ -87,9 +70,10 @@ public class PlayerMapperImpl implements PlayerMapper {
         validateIntegerRange(experience, 0, 10000000);
         entity.setExperience(getByConditionOrNotNull(experience, entity.getExperience(), aNewEntity));
         Long birthday = validateLongMoreThanOrNull(request.getBirthday(), 0L);
+        Date date = RpgDateTimeUtils.millisToDateInDefaultTimeZoneOrNull(birthday);
         LocalDate localDate = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(birthday);
         validateIntegerRange(localDate == null ? null : localDate.getYear(), 2000, 3000);
-        entity.setBirthday(getByConditionOrNotNull(localDate, entity.getBirthday(), aNewEntity));
+        entity.setBirthday(getByConditionOrNotNull(date, entity.getBirthday(), aNewEntity));
         entity.setBanned(getByConditionOrNotNull(request.getBanned(), entity.getBanned(), aNewEntity));
         Integer currentLevel = calculateCurrentLevelOrNull(experience);
         entity.setLevel(getByConditionOrNotNull(currentLevel, entity.getLevel(), aNewEntity));

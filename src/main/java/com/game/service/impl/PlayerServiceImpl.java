@@ -12,7 +12,7 @@ import com.game.service.PlayerService;
 import com.game.utils.RpgDateTimeUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +29,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<PlayerResponseDto> getPlayers(PlayerRequestDto request) {
-        LocalDate after = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getAfter());
-        LocalDate before = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getBefore());
+        Date after = RpgDateTimeUtils.millisToDateInDefaultTimeZoneOrNull(request.getAfter());
+        Date before = RpgDateTimeUtils.millisToDateInDefaultTimeZoneOrNull(request.getBefore());
         List<PlayerEntity> playerEntities = playerRepository.findAllPlayers(request.getName(), request.getTitle(),
                 request.getRaceStringOrNull(), request.getProfessionStringOrNull(), after, before, request.getBanned(),
                 request.getMinExperience(), request.getMaxExperience(), request.getMinLevel(),
@@ -41,8 +41,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Integer countPlayers(PlayerRequestDto request) {
-        LocalDate after = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getAfter());
-        LocalDate before = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getBefore());
+        Date after = RpgDateTimeUtils.millisToDateInDefaultTimeZoneOrNull(request.getAfter());
+        Date before = RpgDateTimeUtils.millisToDateInDefaultTimeZoneOrNull(request.getBefore());
         long countPlayers = playerRepository.countAllPlayers(request.getName(), request.getTitle(),
                 request.getRaceStringOrNull(), request.getProfessionStringOrNull(), after, before, request.getBanned(),
                 request.getMinExperience(), request.getMaxExperience(), request.getMinLevel(),

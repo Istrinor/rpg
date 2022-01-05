@@ -1,7 +1,7 @@
 package com.game.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -25,7 +25,7 @@ public class PlayerEntity {
     @Column(name = "experience")
     private Integer experience;
     @Column(name = "birthday")
-    private LocalDate birthday;
+    private Date birthday;
     @Column(name = "banned", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean banned;
 
@@ -114,11 +114,11 @@ public class PlayerEntity {
         this.untilNextLevel = untilNextLevel;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

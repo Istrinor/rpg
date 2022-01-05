@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -26,8 +26,8 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
             " and (:maxLevel is null or pl.level <= :maxLevel)"
             , nativeQuery = true)
     List<PlayerEntity> findAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") String race,
-                                      @Param("profession") String profession, @Param("after") LocalDate after,
-                                      @Param("before") LocalDate before, @Param("banned") Boolean banned,
+                                      @Param("profession") String profession, @Param("after") Date after,
+                                      @Param("before") Date before, @Param("banned") Boolean banned,
                                       @Param("minExperience") Integer minExperience, @Param("maxExperience") Integer maxExperience,
                                       @Param("minLevel") Integer minLevel, @Param("maxLevel") Integer maxLevel, Pageable pageable);
 
@@ -44,8 +44,8 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
             " and (:maxLevel is null or pl.level <= :maxLevel)"
             , nativeQuery = true)
     Long countAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") String race,
-                                      @Param("profession") String profession, @Param("after") LocalDate after,
-                                      @Param("before") LocalDate before, @Param("banned") Boolean banned,
+                                      @Param("profession") String profession, @Param("after") Date after,
+                                      @Param("before") Date before, @Param("banned") Boolean banned,
                                       @Param("minExperience") Integer minExperience, @Param("maxExperience") Integer maxExperience,
                                       @Param("minLevel") Integer minLevel, @Param("maxLevel") Integer maxLevel);
 
