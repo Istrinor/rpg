@@ -11,11 +11,11 @@ CREATE TABLE player
     banned         BIT(1)      NULL,
     experience     INT(10)     NULL,
     level          INT(3)      NULL,
-    until_next_level INT(10)     NULL,
+    untilNextLevel INT(10)     NULL,
     PRIMARY KEY (id)
 );
 
-INSERT INTO player(name, title, race, profession, birthday, banned, experience, level, until_next_level)
+INSERT INTO player(name, title, race, profession, birthday, banned, experience, level, untilNextLevel)
 VALUES ('Ниус', 'Приходящий Без Шума', 'HOBBIT', 'ROGUE', '2010-10-12', false, 58347, 33, 1153)
      , ('Никрашш', 'НайтВульф', 'ORC', 'WARLOCK', '2010-02-14', false, 174403, 58, 2597)
      , ('Эззэссэль', 'шипящая', 'DWARF', 'CLERIC', '2006-02-28', true, 804, 3, 196)

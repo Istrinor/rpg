@@ -32,7 +32,7 @@ public class PlayerEntity {
     // Counted
     @Column(name = "level")
     private Integer level;
-    @Column(name = "until_next_level")
+    @Column(name = "untilNextLevel")
     private Integer untilNextLevel;
 
     @PrePersist
