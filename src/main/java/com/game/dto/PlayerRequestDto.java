@@ -1,8 +1,8 @@
 package com.game.dto;
 
-import com.game.entity.PlayerEntity;
 import com.game.enums.PlayerOrderEnum;
 import com.game.enums.ProfessionEnum;
+import com.game.enums.RaceEnum;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class PlayerRequestDto {
 
     private String name;
     private String title;
-    private PlayerEntity race;
+    private RaceEnum race;
     private ProfessionEnum profession;
     private Long after;
     private Long before;
@@ -33,7 +33,7 @@ public class PlayerRequestDto {
 
     public Sort getSpringDataSort() {
         List<Sort.Order> orders = new ArrayList<>();
-        orders.add(Sort.Order.asc(PlayerOrderEnum.getFieldNameOrDefault(order)));
+        //   orders.add(Sort.Order.asc(PlayerOrderEnum.getFieldNameOrDefault(order)));
         return Sort.by(orders);
     }
 
@@ -53,16 +53,30 @@ public class PlayerRequestDto {
         this.title = title;
     }
 
-    public PlayerEntity getRace() {
+    public RaceEnum getRace() {
         return race;
     }
 
-    public void setRace(PlayerEntity race) {
+    public String getRaceStringOrNull() {
+        if (race == null) {
+            return null;
+        }
+        return race.name();
+    }
+
+    public void setRace(RaceEnum race) {
         this.race = race;
     }
 
     public ProfessionEnum getProfession() {
         return profession;
+    }
+
+    public String getProfessionStringOrNull() {
+        if (profession == null) {
+            return null;
+        }
+        return profession.name();
     }
 
     public void setProfession(ProfessionEnum profession) {

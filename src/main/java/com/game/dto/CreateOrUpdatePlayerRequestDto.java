@@ -25,6 +25,17 @@ public class CreateOrUpdatePlayerRequestDto {
         }
     }
 
+    public boolean isAllFieldsNull() {
+        Object[] allFields = {name, title, race, profession, experience, birthday, banned};
+        int countOfNull = 0;
+        for (Object field : allFields) {
+            if (field == null) {
+                countOfNull++;
+            }
+        }
+        return allFields.length == countOfNull;
+    }
+
 
     public String getName() {
         return name;

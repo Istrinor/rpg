@@ -42,12 +42,14 @@ public class PlayerInfoTest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlayerInfoTest that = (PlayerInfoTest) o;
+        LocalDate thisBirthday = this.birthday == null ? null : Instant.ofEpochMilli(this.birthday).atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate thatBirthday = that.birthday == null ? null : Instant.ofEpochMilli(that.birthday).atZone(ZoneId.systemDefault()).toLocalDate();
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(title, that.title) &&
                 race == that.race &&
                 profession == that.profession &&
-                Objects.equals(birthday, that.birthday) &&
+                Objects.equals(thisBirthday, thatBirthday) &&
                 Objects.equals(banned, that.banned) &&
                 Objects.equals(experience, that.experience) &&
                 Objects.equals(level, that.level) &&
@@ -61,7 +63,7 @@ public class PlayerInfoTest {
 
     @Override
     public String toString() {
-        LocalDate birthday = Instant.ofEpochMilli(this.birthday).atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate birthday = this.birthday == null ? null : Instant.ofEpochMilli(this.birthday).atZone(ZoneId.systemDefault()).toLocalDate();
         return "PlayerInfoTest{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

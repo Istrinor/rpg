@@ -1,13 +1,13 @@
 package com.game.mapper.impl;
 
 import com.game.dto.CreateOrUpdatePlayerRequestDto;
-import com.game.dto.PlayerPageRequest;
 import com.game.dto.PlayerRequestDto;
 import com.game.dto.PlayerResponseDto;
 import com.game.entity.PlayerEntity;
 import com.game.exception.RpgValidateException;
 import com.game.mapper.PlayerMapper;
 import com.game.utils.RpgDateTimeUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -19,21 +19,17 @@ import java.util.stream.Collectors;
 public class PlayerMapperImpl implements PlayerMapper {
 
     @Override
-    public PlayerPageRequest toPlayerPageRequest(PlayerRequestDto request) {
-        PlayerPageRequest result = new PlayerPageRequest();
+    public PageRequest toPlayerPageRequest(PlayerRequestDto request) {
         Integer pageSize = request.getPageSize();
         if (pageSize == null) {
             pageSize = PlayerRequestDto.DEFAULT_PAGE_SIZE;
         }
-        result.setPageSize(pageSize);
         Integer pageNumber = request.getPageNumber();
         if (pageNumber == null) {
             pageNumber = PlayerRequestDto.DEFAULT_PAGE_NUMBER;
         }
-        result.setPageNumber(pageNumber);
-        result.setSort(request.getSpringDataSort());
 
-        return result;
+        return PageRequest.of(pageNumber, pageSize, request.getSpringDataSort());
     }
 
     @Override
@@ -66,23 +62,31 @@ public class PlayerMapperImpl implements PlayerMapper {
 
     @Override
     public void createOrUpdateEntity(PlayerEntity entity, CreateOrUpdatePlayerRequestDto request) {
+        boolean aNewEntity = entity.isNew();
         String name = request.getName();
         validateNotBlank(name);
-        entity.setName(validateStringLength(name, 13));
-        entity.setTitle(validateStringLength(request.getTitle(), 30));
-        entity.setRace(request.getRace());
-        entity.setProfession(request.getProfession());
+        validateStringLength(name, 13);
+        entity.setName(getByConditionOrNotNull(name, entity.getName(), aNewEntity));
+        String title = validateStringLength(request.getTitle(), 30);
+        entity.setTitle(getByConditionOrNotNull(title, entity.getTitle(),aNewEntity));
+        entity.setRace(getByConditionOrNotNull(request.getRace(), entity.getRace(), aNewEntity));
+        entity.setProfession(getByConditionOrNotNull(request.getProfession(), entity.getProfession(), aNewEntity));
         Integer experience = request.getExperience();
-        entity.setExperience(validateIntegerRange(experience, 0, 10000000));
+        validateIntegerRange(experience, 0, 10000000);
+        entity.setExperience(getByConditionOrNotNull(experience, entity.getExperience(), aNewEntity));
         Long birthday = validateLongMoreThanOrNull(request.getBirthday(), 0L);
         LocalDate localDate = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(birthday);
         validateIntegerRange(localDate == null ? null : localDate.getYear(), 2000, 3000);
-        entity.setBirthday(localDate);
-        entity.setBanned(request.getBanned());
+        entity.setBirthday(getByConditionOrNotNull(localDate, entity.getBirthday(), aNewEntity));
+        entity.setBanned(getByConditionOrNotNull(request.getBanned(),entity.getBanned(), aNewEntity));
         Integer currentLevel = calculateCurrentLevelOrNull(experience);
-        entity.setLevel(currentLevel);
-        entity.setUntilNextLevel(calculateUntilNextLevelOrNull(currentLevel, experience));
+        entity.setLevel(getByConditionOrNotNull(currentLevel, entity.getLevel(), aNewEntity));
+        Integer untilNextLevel = calculateUntilNextLevelOrNull(currentLevel, experience);
+        entity.setUntilNextLevel(getByConditionOrNotNull(untilNextLevel, entity.getUntilNextLevel(), aNewEntity));
+    }
 
+    public <T> T getByConditionOrNotNull(T newValue, T oldValue,  boolean isNewEntity) {
+        return !isNewEntity && newValue == null ? oldValue : newValue;
     }
 
     private String validateStringLength(String name, int expectedStringLength) {

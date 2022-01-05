@@ -1,7 +1,6 @@
 package com.game.repository;
 
 import com.game.entity.PlayerEntity;
-import com.game.enums.ProfessionEnum;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,8 +25,8 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
             " and (:minLevel is null or pl.level >= :minLevel) " +
             " and (:maxLevel is null or pl.level <= :maxLevel)"
             , nativeQuery = true)
-    List<PlayerEntity> findAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") PlayerEntity race,
-                                      @Param("profession") ProfessionEnum profession, @Param("after") LocalDate after,
+    List<PlayerEntity> findAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") String race,
+                                      @Param("profession") String profession, @Param("after") LocalDate after,
                                       @Param("before") LocalDate before, @Param("banned") Boolean banned,
                                       @Param("minExperience") Integer minExperience, @Param("maxExperience") Integer maxExperience,
                                       @Param("minLevel") Integer minLevel, @Param("maxLevel") Integer maxLevel, Pageable pageable);
@@ -44,8 +43,8 @@ public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
             " and (:minLevel is null or pl.level >= :minLevel) " +
             " and (:maxLevel is null or pl.level <= :maxLevel)"
             , nativeQuery = true)
-    Long countAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") PlayerEntity race,
-                                      @Param("profession") ProfessionEnum profession, @Param("after") LocalDate after,
+    Long countAllPlayers(@Param("name") String name, @Param("title") String title, @Param("race") String race,
+                                      @Param("profession") String profession, @Param("after") LocalDate after,
                                       @Param("before") LocalDate before, @Param("banned") Boolean banned,
                                       @Param("minExperience") Integer minExperience, @Param("maxExperience") Integer maxExperience,
                                       @Param("minLevel") Integer minLevel, @Param("maxLevel") Integer maxLevel);

@@ -46,6 +46,10 @@ public class PlayerEntity {
         }
     }
 
+    public boolean isNew() {
+        return this.id == null;
+    }
+
     public PlayerEntity() {
     }
 

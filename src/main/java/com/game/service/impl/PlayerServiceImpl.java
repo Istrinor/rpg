@@ -32,7 +32,7 @@ public class PlayerServiceImpl implements PlayerService {
         LocalDate after = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getAfter());
         LocalDate before = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getBefore());
         List<PlayerEntity> playerEntities = playerRepository.findAllPlayers(request.getName(), request.getTitle(),
-                request.getRace(), request.getProfession(), after, before, request.getBanned(),
+                request.getRaceStringOrNull(), request.getProfessionStringOrNull(), after, before, request.getBanned(),
                 request.getMinExperience(), request.getMaxExperience(), request.getMinLevel(),
                 request.getMaxLevel()
                 , playerMapper.toPlayerPageRequest(request));
@@ -44,7 +44,7 @@ public class PlayerServiceImpl implements PlayerService {
         LocalDate after = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getAfter());
         LocalDate before = RpgDateTimeUtils.millisToLocalDateInDefaultTimeZoneOrNull(request.getBefore());
         long countPlayers = playerRepository.countAllPlayers(request.getName(), request.getTitle(),
-                request.getRace(), request.getProfession(), after, before, request.getBanned(),
+                request.getRaceStringOrNull(), request.getProfessionStringOrNull(), after, before, request.getBanned(),
                 request.getMinExperience(), request.getMaxExperience(), request.getMinLevel(),
                 request.getMaxLevel());
         if (countPlayers < Integer.MIN_VALUE) {
@@ -69,10 +69,14 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerResponseDto editPlayer(Long id, CreateOrUpdatePlayerRequestDto request) {
+        PlayerResponseDto response;
         PlayerEntity playerEntity = findPlayer(id);
-        playerMapper.createOrUpdateEntity(playerEntity, request);
+        if (!request.isAllFieldsNull()) {
+            playerMapper.createOrUpdateEntity(playerEntity, request);
+        }
         PlayerEntity updatedPlayer = playerRepository.saveAndFlush(playerEntity);
-        return playerMapper.toPlayerResponse(updatedPlayer);
+        response = playerMapper.toPlayerResponse(updatedPlayer);
+        return response;
     }
 
     @Override
@@ -89,6 +93,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     private PlayerEntity findPlayer(Long id) {
+        if (id < 1L) {
+            throw new RpgValidateException();
+        }
         Optional<PlayerEntity> optionalPlayer = playerRepository.findById(id);
         return optionalPlayer.orElseThrow(RpgNotFoundException::new);
     }
