@@ -2,6 +2,7 @@ package com.game.utils;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class RpgDateTimeUtils {
@@ -11,7 +12,9 @@ public class RpgDateTimeUtils {
         if (dateInMillis == null) {
             result = null;
         } else {
-            result = Instant.ofEpochMilli(dateInMillis).atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDateTime localDateTime = Instant.ofEpochMilli(dateInMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+            System.out.println(localDateTime);
+            result = localDateTime.toLocalDate();
         }
         return result;
     }
